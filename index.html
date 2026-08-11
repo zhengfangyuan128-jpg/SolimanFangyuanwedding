@@ -60,22 +60,23 @@
             display: block;
         }
 
-        /* RSVP点击区域，z-index高于视频，先开启红色调试底色，调试完成再注释 */
+        /* RSVP热区：对准视频末尾粉色框中间空白位置 */
         .click-link-btn{
             position:absolute;
-            bottom:12vh;
-            left:20vw;
-            right:20vw;
-            height:12vh;
+            /* 根据你视频画面微调这4组数值，对准粉色框中间 */
+            top:42vh;
+            left:25vw;
+            right:25vw;
+            height:16vh;
             z-index:960;
-            /* 👇调试阶段保留红色，看到色块代表按钮真实存在，上线再注释这一行 */
+            /* 调试看到红色块，确认跳转正常后注释本行 */
             background:rgba(255,0,0,0.25);
             display:flex;
             align-items:center;
             justify-content:center;
             color:#fff;
+            font-size:18px;
         }
-        /* 未打开请柬，直接禁止点击 */
         .click-link-btn.disabled{
             pointer-events:none;
         }
@@ -101,8 +102,8 @@
         <video class="invite-video" muted loop playsinline>
             <source src="./SolimanFionaWedding.mp4" type="video/mp4">
         </video>
-        <!-- a标签里面增加占位文字，防止Safari忽略空a标签 -->
-        <a id="rsvpBtn" class="click-link-btn disabled" href="https://zhengfangyuan128-jpg.github.io/SolimanFangyuanwedding/" target="_blank">RSVP</a>
+        <!-- 真实Google表单RSVP链接 -->
+        <a id="rsvpBtn" class="click-link-btn disabled" href="https://docs.google.com/forms/d/e/1FAIpQLSeSToEOGgadSOi62ek_c9hjiqe9O1V5VI5F-3Z2blMD-ur07A/viewform?usp=header" target="_blank">RSVP</a>
     </div>
 
     <audio class="bgm-player" controls preload="auto" loop>
@@ -117,7 +118,6 @@
 
         overlay.addEventListener('click', ()=>{
             overlay.style.display = 'none';
-            // 移除disabled，启用RSVP点击
             rsvpBtn.classList.remove('disabled');
             video.play();
             if(audio.paused) audio.play();
