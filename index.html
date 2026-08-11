@@ -60,10 +60,10 @@
             display: block;
         }
 
-        /* 倒计时模块：页面居中，15秒才显示 */
+        /* 倒计时：放在Save the Date下方，15s显示、20s消失 */
         .countdown-wrap{
             position:absolute;
-            top:30vh;
+            top:36vh;
             left:50%;
             transform: translateX(-50%);
             z-index:955;
@@ -78,7 +78,7 @@
             pointer-events:auto;
         }
 
-        /* RSVP：页面居中，实色粉底色 */
+        /* RSVP：页面居中、实色底色，20s出现 */
         .click-link-btn{
             position:absolute;
             top:48vh;
@@ -127,12 +127,12 @@
             <source src="./SolimanFionaWedding.mp4" type="video/mp4">
         </video>
 
-        <!-- tickcounter倒计时iframe -->
+        <!-- TickCounter倒计时iframe，位于Save the Date下方 -->
         <div class="countdown-wrap" id="countBox">
             <iframe src="https://www.tickcounter.com/countdown/11129451/my-countdown" width="280" height="120" frameborder="0"></iframe>
         </div>
 
-        <!-- RSVP按钮20秒出现 -->
+        <!-- RSVP按钮 -->
         <a id="rsvpBtn" class="click-link-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeSToEOGgadSOi62ek_c9hjiqe9O1V5VI5F-3Z2blMD-ur07A/viewform?usp=header" target="_blank">RSVP</a>
     </div>
 
@@ -148,6 +148,7 @@
         const countBox = document.getElementById('countBox');
 
         const showCountTime = 15;
+        const hideCountTime = 20;
         const showRsvpTime = 20;
         let videoReady = false;
 
@@ -163,13 +164,13 @@
 
         video.addEventListener('timeupdate', ()=>{
             if(!videoReady) return;
-            // >=15秒显示倒计时，小于15秒强制隐藏
-            if(video.currentTime >= showCountTime){
+            // 倒计时：15s ≤ time < 20s 可见，其余隐藏
+            if(video.currentTime >= showCountTime && video.currentTime < hideCountTime){
                 countBox.classList.add('show');
             }else{
                 countBox.classList.remove('show');
             }
-            // >=20秒显示RSVP
+            // RSVP：≥20s 显示
             if(video.currentTime >= showRsvpTime){
                 rsvpBtn.classList.add('show');
             }else{
