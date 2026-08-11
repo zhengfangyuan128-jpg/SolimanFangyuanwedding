@@ -123,6 +123,12 @@
 
         // 视频总时长25秒，20秒之后显示RSVP热区
         const showRsvpTime = 20;
+        let videoReady = false;
+
+        // 等待视频元数据加载完毕，再开启时间检测
+        video.addEventListener('loadedmetadata', function(){
+            videoReady = true;
+        });
 
         overlay.addEventListener('click', ()=>{
             overlay.style.display = 'none';
@@ -130,9 +136,9 @@
             if(audio.paused) audio.play();
         });
 
-        // 根据播放时间控制RSVP显示，20秒后淡入出现
+        // 双重判断：视频加载完成 + 当前时间>=20秒，才显示RSVP
         video.addEventListener('timeupdate', ()=>{
-            if(video.currentTime >= showRsvpTime){
+            if(videoReady && video.currentTime >= showRsvpTime){
                 rsvpBtn.classList.add('show');
             }else{
                 rsvpBtn.classList.remove('show');
