@@ -63,22 +63,27 @@
         /* RSVP热区：对准视频末尾粉色框中间空白位置 */
         .click-link-btn{
             position:absolute;
-            /* 根据你视频画面微调这4组数值，对准粉色框中间 */
             top:42vh;
             left:25vw;
             right:25vw;
             height:16vh;
             z-index:960;
-            /* 调试看到红色块，确认跳转正常后注释本行 */
+            /*调试看到红色块，正式上线注释本行*/
             background:rgba(255,0,0,0.25);
             display:flex;
             align-items:center;
             justify-content:center;
             color:#fff;
             font-size:18px;
-        }
-        .click-link-btn.disabled{
+            /* 默认：隐藏 + 禁止点击 */
+            opacity:0;
             pointer-events:none;
+            transition: opacity 0.4s ease;
+        }
+        /* 到视频末尾才激活显示 */
+        .click-link-btn.show{
+            opacity:1;
+            pointer-events:auto;
         }
 
         .bgm-player {
@@ -99,11 +104,11 @@
     </div>
 
     <div class="video-container" id="videoWrap">
-        <video class="invite-video" muted loop playsinline>
+        <video class="invite-video" muted loop playsinline id="inviteVideo">
             <source src="./SolimanFionaWedding.mp4" type="video/mp4">
         </video>
         <!-- 真实Google表单RSVP链接 -->
-        <a id="rsvpBtn" class="click-link-btn disabled" href="https://docs.google.com/forms/d/e/1FAIpQLSeSToEOGgadSOi62ek_c9hjiqe9O1V5VI5F-3Z2blMD-ur07A/viewform?usp=header" target="_blank">RSVP</a>
+        <a id="rsvpBtn" class="click-link-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeSToEOGgadSOi62ek_c9hjiqe9O1V5VI5F-3Z2blMD-ur07A/viewform?usp=header" target="_blank">RSVP</a>
     </div>
 
     <audio class="bgm-player" controls preload="auto" loop>
@@ -113,14 +118,25 @@
     <script>
         const audio = document.querySelector('.bgm-player');
         const overlay = document.getElementById('overlay');
-        const video = document.querySelector('.invite-video');
+        const video = document.getElementById('inviteVideo');
         const rsvpBtn = document.getElementById('rsvpBtn');
+
+        // 视频总时长25秒，20秒之后显示RSVP热区
+        const showRsvpTime = 20;
 
         overlay.addEventListener('click', ()=>{
             overlay.style.display = 'none';
-            rsvpBtn.classList.remove('disabled');
             video.play();
             if(audio.paused) audio.play();
+        });
+
+        // 根据播放时间控制RSVP显示，20秒后淡入出现
+        video.addEventListener('timeupdate', ()=>{
+            if(video.currentTime >= showRsvpTime){
+                rsvpBtn.classList.add('show');
+            }else{
+                rsvpBtn.classList.remove('show');
+            }
         });
     </script>
 </body>
