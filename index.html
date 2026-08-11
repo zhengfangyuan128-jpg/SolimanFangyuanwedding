@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SolimanFionaWedding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: #000000;
+        }
+        /* 开场点击遮罩层 */
+        .start-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.65);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .start-text {
+            color: #ffffff;
+            font-size: 22px;
+            letter-spacing: 2px;
+            font-family: serif;
+        }
+        /* 全屏视频容器 */
+        .video-container {
+            width: 100vw;
+            height: 100vh;
+        }
+        .invite-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* 左下角迷你播放器 */
+        .bgm-player {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            width: 72px;
+            height: 34px;
+            z-index: 999;
+            opacity: 0.7;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 开场点击提示遮罩 -->
+    <div class="start-overlay" id="overlay">
+        <div class="start-text">Click to Open Your Invitation</div>
+    </div>
+
+    <!-- MP4婚礼请柬视频，使用你真实文件名 -->
+    <div class="video-container">
+        <video class="invite-video" muted loop playsinline>
+            <source src="./SolimanFionaWedding.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- 背景音乐 A.mp3 -->
+    <audio class="bgm-player" controls preload="auto" loop>
+        <source src="./A.mp3" type="audio/mpeg">
+    
+
+    <script>
+        const audio = document.querySelector('.bgm-player');
+        const overlay = document.getElementById('overlay');
+        const video = document.querySelector('.invite-video');
+
+        overlay.addEventListener('click', ()=>{
+            overlay.style.display = 'none';
+            video.play();
+            if(audio.paused) audio.play();
+        });
+    </script>
+</body>
+</html>
