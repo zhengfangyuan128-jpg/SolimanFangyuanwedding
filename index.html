@@ -60,7 +60,7 @@
             display: block;
         }
 
-        /* 倒计时：放在Save the Date下方，15s显示、20s消失 */
+        /* 倒计时：Save the Date下方，15s显示、20s消失 */
         .countdown-wrap{
             position:absolute;
             top:36vh;
@@ -152,6 +152,7 @@
         const showRsvpTime = 20;
         let videoReady = false;
 
+        // ✅保护条件1：等待视频元数据加载完成后，才开启时间判断
         video.addEventListener('loadedmetadata', function(){
             videoReady = true;
         });
@@ -163,8 +164,10 @@
         });
 
         video.addEventListener('timeupdate', ()=>{
+            // ✅保护条件2：双重锁，视频未加载完成直接跳过逻辑，防止初始闪现
             if(!videoReady) return;
-            // 倒计时：15s ≤ time < 20s 可见，其余隐藏
+
+            // 倒计时：15 ≤ 时间 <20 才显示
             if(video.currentTime >= showCountTime && video.currentTime < hideCountTime){
                 countBox.classList.add('show');
             }else{
