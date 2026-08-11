@@ -63,7 +63,7 @@
         /* 倒计时：Save the Date下方，整体上移，15s显示、20s消失 */
         .countdown-wrap{
             position:absolute;
-            top:30vh; /* 向上移动（原36vh） */
+            top:26vh; /* 继续上移（原30vh） */
             left:50%;
             transform: translateX(-50%);
             z-index:955;
@@ -78,16 +78,16 @@
             pointer-events:auto;
         }
 
-        /* RSVP：粉色内框上半区、透明底色、黑色文字 */
+        /* RSVP：粉色内框上半区、#d0b3b2底色、黑色文字 */
         .click-link-btn{
             position:absolute;
-            top:44vh; /* 移入粉色内框上半部分 */
+            top:44vh; /* 粉色框上半部分 */
             left:50%;
             transform: translateX(-50%);
             z-index:960;
             width:260px;
             height:90px;
-            background:transparent; /* 透明底 */
+            background:#d0b3b2; /* 指定底色 */
             border-radius:12px;
             display:flex;
             align-items:center;
